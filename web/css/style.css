@@ -1,0 +1,29 @@
+ul {
+    list-style-type: none;
+    width: 1000px;
+    margin: auto;
+    overflow: hidden;
+    border: 3px black solid;
+}
+
+li {
+    float:left;
+}
+
+#search-panel {
+    width: auto;
+    height: 30px;
+    margin: 10px;
+}
+
+#search-panel-group {
+    position: fixed;
+    z-index: 1;
+}
+
+main {
+    box-shadow: 0 10px 20px 0 rgb(0, 0, 0);
+    width: 800px;
+    margin: auto;
+    padding: 8px;
+}
