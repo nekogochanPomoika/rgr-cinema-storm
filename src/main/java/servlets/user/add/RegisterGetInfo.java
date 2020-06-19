@@ -1,4 +1,4 @@
-package servlets.user;
+package servlets.user.add;
 
 import handler.MailSender;
 import handler.NewUserInfo;
@@ -41,8 +41,6 @@ public class RegisterGetInfo extends HttpServlet {
         text = "Чтобы создать аккаунт перейдите по ссылке ниже\n\t" + link;
 
         NewUserInfo.key = key.toString();
-
-        System.out.println(NewUserInfo.key);
 
         MailSender sslSender = new MailSender("hiddenpoolgogen2@gmail.com", "QWASerdf1234");
         sslSender.send(subject, text, fromEmail, toEmail);

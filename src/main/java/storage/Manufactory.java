@@ -8,9 +8,14 @@ public class Manufactory {
     public static Film film = new Film();
     public static ArrayList<FirstLevelComment> comments1 = new ArrayList<>();
     public static ArrayList<SecondLevelComment> comments2 = new ArrayList<>();
-    public static ArrayList<UserMarks> marks = new ArrayList<>();
     public static ArrayList<FilmForSearchPanel> filmsForSearchPanels = new ArrayList<>();
     public static ArrayList<FilmForTable> filmsForTable = new ArrayList<>();
+    public static ArrayList<FilmForUserPage> filmsForUserPage = new ArrayList<>();
+    public static ArrayList<FilmReq> filmReqs = new ArrayList<>();
+    public static HashMap<String, String> pathes = new HashMap<>();
+
+    //0 means add new film
+    public static int updatedFilmId = 0;
 
     public static HashMap<String, Integer> categories = new HashMap<>();
 

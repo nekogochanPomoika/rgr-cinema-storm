@@ -1,49 +1,95 @@
 (function() {
-    let fields = document.querySelectorAll('textarea');
-    fields.forEach(function (txt, i) {
-        fn = function () {
-            setTimeout(function () {
-                txt.style.height = 'auto';
-                txt.style.height = txt.scrollHeight + 'px';
-            }, 0);
-        };
-        txt.addEventListener('keydown', fn, false);
-    })
+    if (!window.moderator) {
+        let main = document.querySelector('main');
+        main.innerHTML = '<h1>Нет прав доступа!</h1>'
+    }
+
+    window.onbeforeunload = dropUpdatedFilmId;
+
+    doReq('POST', '/rgr_cinema_storm_war_exploded/get-updated-film', false, '', function(resp) {
+        if (resp != 0) {
+            let elements = document.querySelectorAll(".mandatory");
+
+            [].forEach.call(elements, function(el) {
+                el.classList.remove("mandatory");
+            });
+
+            findUrlInputError = function() {
+                let url = document.querySelector('#url').value;
+                let findError = false;
+                let span = document.querySelector('#url-error');
+                span.innerText = '';
+
+                doReq('POST', '/rgr_cinema_storm_war_exploded/check-url-uniqueness', false, url, function (resp) {
+                    if (resp == 'url-not-unique') {
+                        findError = true;
+                        span.innerText = 'url не является уникальным!';
+                    }
+                });
+
+                return findError;
+            }
+
+            findCategoriesError = function() {
+                return false;
+            }
+
+            findYearErrors = function() {
+                let date = document.querySelector('#year').value;
+                let span = document.querySelector('#year-error');
+                span.innerText = '';
+
+                if (date.trim().length != 0) {
+                    if (date < 1901 || date > 2155) {
+                        span.innerText = 'Дата должна находитьсяdfsdfasdfa в пределе от 1901 до 2155';
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+    });
 })();
 
 function addFilm() {
     let returning;
 
-    returning = (findTextInputErrors() || findIntInputErrors() || findCategoriesError() || findUrlInputError());
+    returning = (findTextInputErrors() || findIntInputErrors() || findCategoriesError() || findUrlInputError() || findYearErrors());
 
     if (returning) return;
 
-    doReq('POST', '/rgr_cinema_storm_war_exploded/add-film-base-info', true, getBaseAttributes(), function(){});
-
-    sendFiles();
+    doReq('POST', '/rgr_cinema_storm_war_exploded/add-film-base-info', false, getBaseAttributes(), function(resp) {
+        if (resp === "no result") {
+            window.location.replace('main.html');
+            alert('Чтобы добавить фильм, нужно обладать параметрами администратора');
+        } else sendFiles();
+    });
 }
 
 function sendFiles() {
     let image = document.querySelector('#image');
     let video = document.querySelector('#video');
 
-    let data = new FormData();
+    if (image.value != '') {
+        let data = new FormData();
 
-    data.append('file', image.files[0]);
+        data.append('file', image.files[0]);
 
-    let request = new XMLHttpRequest();
-    request.open('post', '/rgr_cinema_storm_war_exploded/upload-servlet', false);
+        let request = new XMLHttpRequest();
+        request.open('post', '/rgr_cinema_storm_war_exploded/upload-servlet', false);
 
-    request.send(data);
+        request.send(data);
+    }
+    if (video.value != '') {
+        let data2 = new FormData();
 
-    let data2 = new FormData();
+        data2.append('file', video.files[0]);
 
-    data2.append('file', video.files[0]);
+        let request2 = new XMLHttpRequest();
+        request2.open('post', '/rgr_cinema_storm_war_exploded/upload-servlet', false);
 
-    let request2 = new XMLHttpRequest();
-    request2.open('post', '/rgr_cinema_storm_war_exploded/upload-servlet', false);
-
-    request2.send(data2);
+        request2.send(data2);
+    }
 }
 
 function findTextInputErrors() {
@@ -55,7 +101,7 @@ function findTextInputErrors() {
         span.innerText = '';
 
         if (element.classList.contains('mandatory')) {
-            if (element.value.length == null || element.value.trim().length == 0) {
+            if (element.value == null || element.value.trim().length == 0) {
                 span.innerText = 'Поле пустое!';
                 findError = true;
             }
@@ -103,10 +149,21 @@ function findUrlInputError() {
     return findError;
 }
 
+function findYearErrors() {
+    let date = document.querySelector('#year').value;
+    let span = document.querySelector('#year-error');
+
+    if (date < 1901 || date > 2155) {
+        span.innerText = 'Дата должна находиться в пределе от 1901 до 2155';
+        return true;
+    }
+    return false;
+}
+
 function getBaseAttributes() {
     let str = '';
     str += 'name='
-    str += document.querySelector('#name').value
+    str += document.querySelector('#name').value.replace(/\r?\n/g, "");
 
     let fields = document.querySelectorAll('.field');
 
@@ -114,16 +171,18 @@ function getBaseAttributes() {
         str += '&';
         str += field.getAttribute('id');
         str += '=';
-        str += field.value;
+        str += field.value.replace(/\r?\n/g, "");
     });
 
     let categories = document.querySelectorAll('select');
 
-    str += '&category=';
-    str += categories[0].value;
+    if (categories.length > 0) {
+        str += '&category=';
+        str += categories[0].value;
 
-    for (i = 1; i < categories.length; i++) {
-        str += ',' + categories[i].value;
+        for (i = 1; i < categories.length; i++) {
+            str += ',' + categories[i].value;
+        }
     }
     return str;
 }
@@ -234,4 +293,14 @@ function findCategoriesError() {
     if (n === 1) {
         errorSpan.innerText = 'Не выбрана ни одна категория!';
     }
+}
+
+function dropUpdatedFilmId() {
+    doReq('POST', '/rgr_cinema_storm_war_exploded/set-updated-film', false, 'id=0', function(resp) {
+        if (resp == 'no result') {
+            alert('Недостаточно прав!');
+        } else {
+            window.location.replace('add-film.html');
+        }
+    })
 }

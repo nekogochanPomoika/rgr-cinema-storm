@@ -1,4 +1,4 @@
-package servlets.film;
+package servlets.film.get;
 
 import handler.DBHandler;
 import storage.Manufactory;
@@ -13,7 +13,9 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/for-search-panel")
 public class ForSearchPanel extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+
         String tag = req.getParameter("tag");
 
         DBHandler.getFilmsForSearchPanelByTag(tag);
@@ -32,7 +34,7 @@ public class ForSearchPanel extends HttpServlet {
 
             res.append(']');
         } catch (IndexOutOfBoundsException e) {
-            res = new StringBuilder();
+            res = new StringBuilder("no result");
         }
 
         resp.setCharacterEncoding("UTF-8");

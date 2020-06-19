@@ -8,4 +8,8 @@
         <welcome-file>main.html</welcome-file>
     </welcome-file-list>
 
+    <listener>
+        <listener-class>OnServerStart</listener-class>
+    </listener>
+
 </web-app>

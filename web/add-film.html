@@ -1,34 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <title>Добавить фильм</title>
+    <title>Добавить/Редактировать фильм</title>
 </head>
 <body onclick="hideGroup()">
 <nav>
-    <ul>
-        <li><a href="#"><img src="resources/images/logo-png.png" width="50px"></a></li>
-        <li><input id="search-panel" onclick="showGroup()"></li>
-        <li><a href="#">my account/register</a></li>
+    <ul id="navUl">
+        <li><a href="#"><img src="resources/images/logo-png.png" width="50px" height="50px"></a></li>
+        <li><input id="search-panel" onclick="showGroup()" onkeyup="getGroupList()"></li>
+        <li><a href="#" id="search-panel-button-anchor"><button id="search-panel-button">my account/register</button></a></li>
     </ul>
-    <div id="search-panel-group"></div>
+    <table id="search-panel-group" onclick="showGroup()" style="display: none;"><tr><td>Введите название фильма...</td></tr></table>
 </nav>
-<h1>Добавить/редактировать фильм</h1>
-<hr>
 <main>
+    <h1>Добавить/редактировать фильм</h1>
+    <hr>
     <!--Поле ввода name не имеет класса field потому что добавляется первым вне цикла-->
-    <p>Имяафываф:</p>
-    <input id="name" class="text-input mandatory"><span class="error" id="name-error"></span><br>
+    <span id="filmId" hidden></span>
+
+    <p>Имя:</p>
+    <input id="name" class="text-input mandatory" maxlength="200"><span class="error" id="name-error"></span><br>
 
     <p>Ссылка на фильм:</p>
-    <input id="url" class="field text-input mandatory"><span class="error" id="url-error"></span><br>
+    <input id="url" class="field text-input mandatory" maxlength="200"><span class="error" id="url-error"></span><br>
 
     <p>Год:</p>
-    <input id="year" class="field int-input mandatory"><span class="error" id="year-error"></span><br>
+    <input id="year" class="field int-input mandatory" maxlength="4"><span class="error" id="year-error"></span><br>
 
     <p>Страна:</p>
-    <input id="country" class="field text-input mandatory"><span class="error" id="country-error"></span><br>
+    <input id="country" class="field text-input mandatory" maxlength="60"><span class="error" id="country-error"></span><br>
 
     <p>Категории (до трех):</p>
     <div id="select-fields-root">
@@ -38,78 +40,80 @@
     <span class="error" id="categories-error"></span>
 
     <p>Режиссеры:</p>
-    <input id="directors" class="field text-input mandatory"><span class="error" id="directors-error"></span><br>
+    <input id="directors" class="field text-input mandatory" maxlength="100"><span class="error" id="directors-error"></span><br>
 
     <p>В главных ролях:</p>
-    <input id="main_actors" class="field text-input mandatory"><span class="error" id="main_actors-error"></span><br>
+    <input id="main_actors" class="field text-input mandatory" maxlength="100"><span class="error" id="main_actors-error"></span><br>
 
     <p>Описание:</p>
-    <input id="description" class="field text-input mandatory"><span class="error" id="description-error"></span><br>
+    <textarea id="description" class="field text-input mandatory"></textarea><span class="error" id="description-error"></span><br>
 
     <hr>
     <p>Необязательные поля:</p><br>
 
     <p>Английское название:</p>
-    <input id="english_name" class="field text-input"><span class="error" id="english_name-error"></span><br>
+    <input id="english_name" class="field text-input" maxlength="200"><span class="error" id="english_name-error"></span><br>
 
     <p>Слоган:</p>
-    <input id="tagline" class="field text-input"><span class="error" id="tagline-error"></span><br>
+    <input id="tagline" class="field text-input" maxlength="99"><span class="error" id="tagline-error"></span><br>
 
-    <p>Бюджет:</p>
-    <input id="budget" class="field int-input"><span class="error" id="budget-error"></span><br>
+    <p>Бюджет (в долларах США):</p>
+    <input id="budget" class="field int-input" maxlength="10"><span class="error" id="budget-error"></span><br>
 
-    <p>Сборы:</p>
-    <input id="fees" class="field int-input"><span class="error" id="fees-error"></span><br>
+    <p>Сборы (в долларах США):</p>
+    <input id="fees" class="field int-input" maxlength="10"><span class="error" id="fees-error"></span><br>
 
     <p>Дата премьеры:</p>
     <input id="premiere_date" type="date" class="field"><span class="error" id="premiere_date-error"></span><br>
 
     <p>Ограничение по возрасту:</p>
-    <input id="age_limit" class="field int-input "><span class="error" id="age_limit-error"></span><br>
+    <input id="age_limit" class="field int-input" maxlength="3"><span class="error" id="age_limit-error"></span><br>
 
     <p>Длительность (в минутах):</p>
-    <input id="duration" class="field int-input"><span class="error" id="duration-error"></span><br>
+    <input id="duration" class="field int-input" maxlength="6"><span class="error" id="duration-error"></span><br>
 
     <p>Сценаристы:</p>
-    <input id="screenwriters" class="field text-input"><span class="error" id="screenwriters-error"></span><br>
+    <input id="screenwriters" class="field text-input" maxlength="200"><span class="error" id="screenwriters-error"></span><br>
 
     <p>Продюсеры:</p>
-    <input id="producers" class="field text-input"><span class="error" id="producers-error"></span><br>
+    <input id="producers" class="field text-input" maxlength="200"><span class="error" id="producers-error"></span><br>
 
     <p>Операторы:</p>
-    <input id="operators" class="field text-input"><span class="error" id="operators-error"></span><br>
+    <input id="operators" class="field text-input" maxlength="200"><span class="error" id="operators-error"></span><br>
 
     <p>Композиторы:</p>
-    <input id="composers" class="field text-input"><span class="error" id="composers-error"></span><br>
+    <input id="composers" class="field text-input" maxlength="200"><span class="error" id="composers-error"></span><br>
 
     <p>Художники:</p>
-    <input id="artists" class="field text-input"><span class="error" id="artists-error"></span><br>
+    <input id="artists" class="field text-input" maxlength="200"><span class="error" id="artists-error"></span><br>
 
     <p>Монтажеры:</p>
-    <input id="editors" class="field text-input"><span class="error" id="editors-error"></span><br>
+    <input id="editors" class="field text-input" maxlength="200"><span class="error" id="editors-error"></span><br>
 
     <p>Остальные актеры:</p>
-    <input id="other_actors" class="field text-input"><span class="error" id="other_actors-error"></span><br>
+    <input id="other_actors" class="field text-input" maxlength="200"><span class="error" id="other_actors-error"></span><br>
 
     <form action="/upload-servlet" method="post" enctype="multipart/form-data">
         <p>Постер:</p>
-        <input type="file" accept="image/png, image/jpeg" id="image">><br>
+        <input type="file" accept="image/png, image/jpeg" id="image"><br>
+        <p id="imageInfo"></p>
 
         <p>Трейлер:</p>
         <input type="file" accept="video/mp4, video/ogg, video/webm" id="video"><br>
+        <p id="videoInfo"></p>
     </form>
     <br><br>
 
     <button onclick="addFilm()">Добавить/редактировать</button>
 </main>
-<footer>
+<!--<footer>
     <ul>
         <li><a href="#">Реклама</a></li>
         <li><a href="#">Соглашение</a></li>
         <li><a href="#">Помощь</a></li>
     </ul>
-</footer>
-<script src="js/add-film.js"></script>
+</footer>-->
 <script src="js/main.js"></script>
+<script src="js/add-film.js"></script>
 </body>
 </html>

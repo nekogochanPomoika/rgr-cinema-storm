@@ -1,4 +1,4 @@
-package servlets.user;
+package servlets.user.add;
 
 import handler.DBHandler;
 import handler.NewUserInfo;
@@ -17,9 +17,6 @@ public class RegisterEnd extends HttpServlet {
         String key = req.getParameter("key");
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
-
-        System.out.println(NewUserInfo.key + " " + NewUserInfo.mail + " " + NewUserInfo.login + " " + NewUserInfo.password);
-        System.out.println(key);
 
         if (key.equals(NewUserInfo.key)) {
             DBHandler.addUser(NewUserInfo.login, NewUserInfo.mail, NewUserInfo.password);

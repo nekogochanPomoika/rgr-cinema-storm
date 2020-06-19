@@ -15,31 +15,30 @@
     <table id="search-panel-group" onclick="showGroup()" style="display: none;"><tr><td>Введите название фильма...</td></tr></table>
 </nav>
 <aside>
+    <p>Рекламный баннер</p>
 </aside>
 <main>
+    <h3 id="user-name"></h3>
+    <div class="forModerator" style="display: none">
+        <button onclick="deleteUser()">Удалить пользователя</button>
+    </div>
+    <br><br>
     <table>
         <thead>
-            <tr>
-                <th>№</th>
-                <th><button onclick="setOrder('name')">Фильм</button></th>
-                <th><button onclick="setOrder('rating/marks_count')">Оценка</button></th>
-                <th><button onclick="setOrder('marks_count')">Кол-во обзоров</button></th>
-            </tr>
+        <tr>
+            <th>№</th>
+            <th><button onclick="setOrder('name')">Фильм</button></th>
+            <th><button onclick="setOrder('rating/marks_count')">Оценка</button></th>
+            <th><button onclick="setOrder('mark')">Оценка пользователя</button></th>
+        </tr>
         </thead>
         <tbody id="films-table">
 
         </tbody>
     </table>
     <span id="table-page"></span>
-    <hr>
-    <a href="film-req.html">
-        <button id="films-req"></button>
-    </a><br>
-    <div class="forModerator" style="display: none">
-        <a href="add-film.html"><button>Добавить фильм</button></a>
-    </div>
 </main>
 <script src="js/main.js"></script>
-<script src="js/main-page-table.js"></script>
+<script src="js/user-page.js"></script>
 </body>
 </html>

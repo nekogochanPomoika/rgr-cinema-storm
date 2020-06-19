@@ -1,7 +1,8 @@
-package servlets.film;
+package servlets.film.add;
 
 import handler.DBHandler;
 import handler.FilmBuilder;
+import storage.Manufactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,9 +33,10 @@ public class AddFilmBaseInfo extends HttpServlet {
             FilmBuilder.values.add(value);
         }
 
-        System.out.println(FilmBuilder.keys);
-        System.out.println(FilmBuilder.values);
-
-        DBHandler.addFilm(FilmBuilder.keys, FilmBuilder.values);
+        if (Manufactory.updatedFilmId == 0) {
+            DBHandler.addFilm(FilmBuilder.keys, FilmBuilder.values);
+        } else {
+            DBHandler.updateFilm(FilmBuilder.keys, FilmBuilder.values);
+        }
     }
 }

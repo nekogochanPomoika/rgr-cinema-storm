@@ -1,29 +1,122 @@
-ul {
-    list-style-type: none;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+html {
+    background-color: #252525;
+    color: #ffb42c;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 90%;
+    hyphens: auto;
+}
+
+input, textarea {
+    background-color: #151515;
+    color: #ffb42c;
+    margin: 0 0 10px 0;
+    border: none;
+}
+
+button {
+    background-color: #151515;
+    border-color: black;
+    color: #ffb42c;
+    margin: 5px;
+}
+
+nav {
+    background-color: #1b1b1b;
+    position: relative;
     width: 1000px;
+    height: 60px;
     margin: auto;
     overflow: hidden;
     border: 3px black solid;
+}
+
+footer {
+    width: 900px;
+    margin: auto;
+    overflow: hidden;
+    border: 3px black solid;
+    z-index: 1;
+}
+
+ul {
+    list-style-type: none;
+    width: 700px;
+    margin: auto;
 }
 
 li {
     float:left;
 }
 
+#search-panel-button {
+    width: 70px;
+    margin: 10px;
+}
+
 #search-panel {
-    width: auto;
+    width: 500px;
     height: 30px;
     margin: 10px;
 }
 
 #search-panel-group {
+    background-color: #1c1714;
+    border: 0 solid black;
+    box-shadow: 0 10px 20px 0 rgb(0, 0, 0);
     position: fixed;
+    top: 60px;
+    left: 25%;
+    width: 50%;
+    margin: auto;
     z-index: 1;
 }
 
 main {
+    background-color: #1b1b1b;
     box-shadow: 0 10px 20px 0 rgb(0, 0, 0);
     width: 800px;
     margin: auto;
-    padding: 8px;
+    padding: 20px;
+}
+
+textarea {
+    overflow: hidden;
+    resize: none;
+    line-height: 1;
+}
+
+a {
+    color: #b0b547;
+}
+
+img {
+    width: auto;
+}
+
+.firstLvlComment {
+    border: 1px solid black;
+    background-color: #151515;
+}
+
+.secondLvlComment {
+    border: 1px solid black;
+    margin: 30px;
+    background-color: #151515;
+}
+
+
+hr {
+    height: 3px;
+    background-color: #50463a;
+    border: none;
+}
+
+#description {
+    margin: 10px 30px;
+}
+
+#mark {
+    margin: 20px 30px;
 }

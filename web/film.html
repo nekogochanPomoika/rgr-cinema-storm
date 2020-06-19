@@ -1,51 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <title></title>
+    <title>Регистрация</title>
 </head>
 <body onclick="hideGroup()">
 <nav>
-    <ul>
-        <li><a href="#"><img src="resources/images/logo-png.png" width="50px"></a></li>
-        <li><input id="search-panel" onclick="showGroup()"></li>
-        <li><a href="#">my account/register</a></li>
+    <ul id="navUl">
+        <li><a href="#"><img src="resources/images/logo-png.png" width="50px" height="50px"></a></li>
+        <li><input id="search-panel" onclick="showGroup()" onkeyup="getGroupList()"></li>
+        <li><a href="#" id="search-panel-button-anchor"><button id="search-panel-button">my account/register</button></a></li>
     </ul>
-    <div id="search-panel-group"></div>
+    <table id="search-panel-group" onclick="showGroup()" style="display: none;"><tr><td>Введите название фильма...</td></tr></table>
 </nav>
 <aside>
-    <p>Рекламный баннер</p>
 </aside>
 <main>
     <div id="info">
+        <div class="forModerator" style="display: none">
+            <button onclick="deleteFilm()">Удалить</button>
+            <button onclick="changeFilmInfo()">Редактировать</button>
+        </div>
         <h1 id="name"></h1>
-        <a href="#">Редактировать</a>
-        <img id="image">
-        <div id="main-info"></div>
-        <div id="trailer"></div>
+        <div id="img-div">
+            <img id="image">
+        </div>
+        <div id="main-info-div">
+            <table id="main-info">
+                <colgroup>
+                    <col span="1" style="width: 100px">
+                    <col span="1" style="width: calc(100% - 100px)">
+                </colgroup>
+            </table>
+        </div>
+        <br>
+        <div id="trailer" style="width: 100%"></div>
+        <br>
         <p id="description"></p>
     </div>
-    <div id="mark-and-href">
-        <span id="mark">
-            <span id="stars"></span>
-            <span id="rating"></span>
-        </span>
+    <div id="mark">
+        <span id="stars"></span>
+        <span id="rating"></span>
     </div>
     <hr>
-    <a href="#">Показать обзоры</a> <br>
-    <a href="#">Написать обзор</a>
+    <button onclick="newComment()">Написать обзор</button><br><br>
+    <button onclick="getComments()">Показать обзоры</button>
+    <div id="newComment" style="display: none">
+        <hr>
+        <p>Загаловок:</p>
+        <input id="comment-title"><span id="comment-title-error"></span><br>
+        <p>Оценка:</p>
+        <input id="comment-rating"><span id="comment-rating-error"></span><br>
+        <p>Текст:</p>
+        <textarea id="comment-text"></textarea><span id="comment-text-error"></span><br><br>
+        <button onclick="addComment()">Добавить комментарий</button><br>
+    </div>
+    <hr>
     <div id="comments">
 
     </div>
 </main>
-<footer>
-    <ul>
-        <li><a href="#">Реклама</a></li>
-        <li><a href="#">Соглашение</a></li>
-        <li><a href="#">Помощь</a></li>
-    </ul>
-</footer>
 <script src="js/main.js"></script>
 <script src="js/film.js"></script>
 </body>

@@ -15,24 +15,21 @@
     <table id="search-panel-group" onclick="showGroup()" style="display: none;"><tr><td>Введите название фильма...</td></tr></table>
 </nav>
 <main>
-    <h1>Регистрация</h1>
+    <h1>Вход в аккаунт</h1>
     <hr>
     <!--Логин не имеет класса field потому что добавляется первым-->
     <p>Логин:</p>
     <input id="login" class="text-input"><span class="error" id="login-error"></span><br>
 
-    <p>Почта:</p>
-    <input id="mail" class="field text-input"><span class="error" id="mail-error"></span><br>
-
     <p>Пароль:</p>
-    <input id="password" class="field text-input" type="password"><span class="error" id="password-error"></span><br>
+    <input id="password" class="text-input" type="password"><span class="error" id="password-error"></span><br>
 
-    <p>Подтверждение пароля:</p>
-    <input id="password_confirm" class="text-input" type="password"><span class="error" id="password_confirm-error"></span><br>
-
-    <button onclick="sendRegisterData()">Продолжить</button>
+    <button onclick="login()">Продолжить</button>
+    <br>
+    <h3>Нет аккаунта?</h3>
+    <a href="register.html">Создать аккаунт</a>
 </main>
 <script src="js/main.js"></script>
-<script src="js/register.js"></script>
+<script src="js/login.js"></script>
 </body>
 </html>

@@ -1,0 +1,1 @@
+resources C:\Users\Egor\IdeaProjects\rgr-cinema-storm\web\resources\
