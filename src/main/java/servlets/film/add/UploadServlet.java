@@ -2,6 +2,7 @@ package servlets.film.add;
 
 import handler.DBHandler;
 import handler.FilmBuilder;
+import handler.FilmUpdater;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -39,12 +40,17 @@ public class UploadServlet extends HttpServlet {
         videoFilePath = resources + "videos\\";
         imageFilePath = resources + "images\\filmsPosters\\";
         tempPath = resources + "temp\\";
-        filmUrl = FilmBuilder.values.get(1);
+        try {
+            filmUrl = FilmBuilder.values.get(1);
+        } catch (IndexOutOfBoundsException e) {
+            filmUrl = DBHandler.getFilmUrl(Manufactory.updatedFilmId);
+        }
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        System.out.println(1);
         java.io.PrintWriter out = response.getWriter();
         // Check that we have a file upload request
         isMultipart = ServletFileUpload.isMultipartContent(request);
@@ -64,6 +70,7 @@ public class UploadServlet extends HttpServlet {
         upload.setSizeMax( maxFileSize );
 
         try {
+            System.out.println(2);
             // Parse the request to get file items.
             List fileItems = upload.parseRequest(request);
 
@@ -94,6 +101,8 @@ public class UploadServlet extends HttpServlet {
                         file = new File(filePath + filmUrl + fileName.substring(fileName.lastIndexOf('.')));
                     }
                     fi.write(file);
+
+                    System.out.println(5);
                 }
             }
         } catch(Exception ex) {

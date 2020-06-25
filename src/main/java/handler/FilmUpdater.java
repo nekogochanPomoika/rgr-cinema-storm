@@ -15,16 +15,22 @@ public class FilmUpdater {
 
         sqlQuery.append(keys.get(0));
         sqlQuery.append(" = ");
+        sqlQuery.append('\'');
         sqlQuery.append(values.get(0));
+        sqlQuery.append('\'');
 
         for (int i = 1; i < keys.size(); i++) {
             sqlQuery.append(", ");
             sqlQuery.append(keys.get(0));
             sqlQuery.append(" = ");
+            sqlQuery.append('\'');
             sqlQuery.append(values.get(0));
+            sqlQuery.append('\'');
         }
 
         sqlQuery.append(" WHERE id = ?");
+
+        System.out.println(sqlQuery);
     }
 
     void buildStatement(PreparedStatement statement) throws SQLException {

@@ -71,6 +71,9 @@ function sendFiles() {
     let video = document.querySelector('#video');
 
     if (image.value != '') {
+        let imageSpan = document.querySelector('#image-span');
+        imageSpan.innerText = 'Изображение загружается...';
+
         let data = new FormData();
 
         data.append('file', image.files[0]);
@@ -79,8 +82,12 @@ function sendFiles() {
         request.open('post', '/rgr_cinema_storm_war_exploded/upload-servlet', false);
 
         request.send(data);
+        imageSpan.innerText = 'Изображение загружено!';
     }
     if (video.value != '') {
+        let imageSpan = document.querySelector('#image-span');
+        imageSpan.innerText = 'Видео загружается...';
+
         let data2 = new FormData();
 
         data2.append('file', video.files[0]);
@@ -89,7 +96,10 @@ function sendFiles() {
         request2.open('post', '/rgr_cinema_storm_war_exploded/upload-servlet', false);
 
         request2.send(data2);
+        imageSpan.innerText = 'Видео загружено!';
     }
+    alert('Фильм добавлен!');
+    window.location.replace('main.html');
 }
 
 function findTextInputErrors() {

@@ -17,6 +17,7 @@ import java.util.Map;
 public class AddFilmBaseInfo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         FilmBuilder.keys.clear();               FilmBuilder.values.clear();
 
         req.setCharacterEncoding("UTF-8");

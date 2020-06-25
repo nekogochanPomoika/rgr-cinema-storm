@@ -610,6 +610,27 @@ public class DBHandler {
         return film;
     }
 
+    public static String getFilmUrl(int id) {
+        Manufactory.film = null;
+
+        String sqlQuery = "SELECT url FROM films WHERE id = ?";
+
+        String url = "not found";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                url = resultSet.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return url;
+    }
+
     public static void getFilmsForTableOrderBy(int pageSize, int pageNumber, String orderBy, boolean desc) {
         Manufactory.filmsForTable.clear();
 
