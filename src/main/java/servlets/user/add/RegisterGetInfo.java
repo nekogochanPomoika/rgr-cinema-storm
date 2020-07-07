@@ -42,7 +42,7 @@ public class RegisterGetInfo extends HttpServlet {
 
         NewUserInfo.key = key.toString();
 
-        MailSender sslSender = new MailSender("hiddenpoolgogen2@gmail.com", "QWASerdf1234");
+        MailSender sslSender = new MailSender("mail@example.com", "password1234");
         sslSender.send(subject, text, fromEmail, toEmail);
     }
 }
